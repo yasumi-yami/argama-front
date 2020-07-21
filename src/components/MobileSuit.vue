@@ -25,7 +25,7 @@ export default {
       this.suits = JSON.parse(localStorage.getItem('suits'))
     } else {
       this.axios
-        .get('http://localhost:28080/versions/mbon/suits')
+        .get(process.env.VUE_APP_API_BASE_URL + '/mbon/suits')
         .then(response => {
           this.suits = response.data.items
           localStorage.setItem('suits', JSON.stringify(this.suits))
