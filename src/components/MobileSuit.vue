@@ -1,11 +1,57 @@
 <template>
   <div class="container">
-    <h1>機体情報</h1>
+    <b-input v-model="name" placeholder="機体名"></b-input>
+    <b-field>
+      <b-checkbox-button  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-success">
+        <span>{{title}}</span>
+      </b-checkbox-button>
+    </b-field>
+    <b-field>
+      <b-checkbox-button  v-for="cost in costs" :key="cost" v-model="selectedCosts" v-bind:native-value="cost" type="is-success">
+        <span>{{cost}}</span>
+      </b-checkbox-button>
+    </b-field>
+    <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
+    <div id="list" v-for="suit in search" :key="suit.id">
+      <article class="panel is-primary is-active">
+        <p class="panel-heading">
+        {{ suit.name }}
+        </p>
+        <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-battery-full" aria-hidden="true"></i>
+          </span>
+          {{ suit.cost }}
+        </a>
 
-    <div class="buttons" id="list" v-for="suit in suits" :key="suit.id">
-      <b-button type="is-info">{{ suit.id }}{{ suit.name }}</b-button>
+        <template v-if="suit.subHP === 0">
+          <a class="panel-block">
+            <span class="panel-icon">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+            </span>
+            {{ suit.hp }}
+          </a>
+        </template>
+        <template v-else>
+          <a class="panel-block">
+            <span class="panel-icon">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+            </span>
+            {{ suit.hp }} + {{ suit.subHP }}
+          </a>
+        </template>
+        <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-tags" aria-hidden="true"></i>
+          </span>
+          <template v-if="suit.tags">
+            {{ suit.tags.join("/") }}
+          </template>
+          <template v-else>
+          </template>
+        </a>
+      </article>
     </div>
-
   </div>
 </template>
 
@@ -16,12 +62,19 @@ export default {
     return {
       currentSuit: '',
       currentId: '',
-      suits: {}
+      suits: {},
+      name: '',
+      selectedTags: [],
+      tags: [],
+      selectedCosts: [],
+      costs: [],
+      titles: [],
+      selectedTitles: [],
     }
   },
   mounted() {
-    var now = new Date()
-    if (localStorage.suits && localStorage.getItem('fetchedAt') > now.getTime()/1000) {
+    let now = new Date()
+    if (process.env.NODE_ENV == 'production' && localStorage.suits && localStorage.getItem('fetchedAt') > (now.getTime()/1000-3)) {
       this.suits = JSON.parse(localStorage.getItem('suits'))
     } else {
       this.axios
@@ -29,8 +82,47 @@ export default {
         .then(response => {
           this.suits = response.data.items
           localStorage.setItem('suits', JSON.stringify(this.suits))
-          localStorage.setItem('fetchedAt',now.getTime()/1000+864*7) // デバッグ用に短時間
+          localStorage.setItem('fetchedAt',now.getTime()/1000)
+          var tagSet = new Set()
+          var costSet = new Set()
+          var titleSet = new Set()
+          for (var k in this.suits) {
+            for (var idx in this.suits[k].tags) {
+              tagSet.add(this.suits[k].tags[idx])
+            }
+            costSet.add(this.suits[k].cost)
+            titleSet.add(this.suits[k].from)
+          }
+          this.tags = Array.from(tagSet)
+          this.costs = Array.from(costSet)
+          this.titles = Array.from(titleSet)
         })
+
+    }
+  },
+  computed: {
+    search: function() {
+      var searched = Object.values(this.suits)
+      searched = searched.filter(
+        suit => suit.name.includes(this.name)
+      )
+      console.log(this.selectedTitles)
+      if (this.selectedTitles.length > 0) {
+        searched = searched.filter(
+          suit => this.selectedTitles.includes(suit.from)
+        )
+      }
+      if (this.selectedCosts.length > 0) {
+        searched = searched.filter(
+          suit => this.selectedCosts.includes(suit.cost)
+        )
+      }
+      if (this.selectedTags.length > 0) {
+        searched = searched.filter(
+          suit => this.selectedTags.every(tag => suit.tags !== null && suit.tags.includes(tag))
+        )
+      }
+      return searched
     }
   },
   methods: {
