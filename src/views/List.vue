@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <MobileSuits/>
+    <MobileSuits />
   </div>
 </template>
 

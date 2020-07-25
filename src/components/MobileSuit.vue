@@ -2,7 +2,7 @@
   <div class="container">
     <b-input v-model="name" placeholder="機体名"></b-input>
     <b-field>
-      <b-checkbox-button  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-success">
+      <b-checkbox-button  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-info" selected="selected">
         <span>{{title}}</span>
       </b-checkbox-button>
     </b-field>
@@ -13,9 +13,9 @@
     </b-field>
     <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
     <div id="list" v-for="suit in search" :key="suit.id">
-      <article class="panel is-primary is-active">
+      <article class="panel is-primary">
         <p class="panel-heading">
-        {{ suit.name }}
+        <router-link :to="{name: 'Detail', params: {id: suit.id}}">{{ suit.name }}</router-link> 
         </p>
         <a class="panel-block">
           <span class="panel-icon">
@@ -95,7 +95,9 @@ export default {
           }
           this.tags = Array.from(tagSet)
           this.costs = Array.from(costSet)
+          this.selectedCosts = Array.from(costSet)
           this.titles = Array.from(titleSet)
+          this.selectedTitles = Array.from(titleSet)
         })
 
     }
@@ -137,6 +139,19 @@ export default {
   }
 }
 </script>
-
 <style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
 </style>
