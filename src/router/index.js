@@ -11,12 +11,12 @@ const routes = [
 		component: Home
 	},
 	{
-		path: '/list',
+		path: '/:version/list',
 		name: 'List',
 		component: () => import( '../views/List.vue')
 	},
 	{
-		path: '/detail/:id',
+		path: '/:version/detail/:id',
 		name: 'Detail',
 		component: () => import( '../views/Detail.vue')
 	}

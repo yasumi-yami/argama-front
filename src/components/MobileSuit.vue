@@ -15,7 +15,7 @@
     <div id="list" v-for="suit in search" :key="suit.id">
       <article class="panel is-primary">
         <p class="panel-heading">
-        <router-link :to="{name: 'Detail', params: {id: suit.id}}">{{ suit.name }}</router-link> 
+        <router-link :to="{name: 'Detail', params: {version: $route.params.version, id: suit.id}}">{{ suit.name }}</router-link> 
         </p>
         <a class="panel-block">
           <span class="panel-icon">
@@ -60,6 +60,7 @@ export default {
   name: 'MobileSuits',
   data() {
     return {
+      version: '',
       currentSuit: '',
       currentId: '',
       suits: {},
@@ -78,7 +79,7 @@ export default {
       this.suits = JSON.parse(localStorage.getItem('suits'))
     } else {
       this.axios
-        .get(process.env.VUE_APP_API_BASE_URL + '/mbon/suits')
+        .get(process.env.VUE_APP_API_BASE_URL + '/' + this.$route.params.version + '/suits')
         .then(response => {
           this.suits = response.data.items
           localStorage.setItem('suits', JSON.stringify(this.suits))

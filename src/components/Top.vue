@@ -1,6 +1,10 @@
 <template>
   <div class="top">
     <h1>{{ msg }}</h1>
+    <li>
+      <ul><router-link :to="{name: 'List', params: {version: 'mbon'}}">マキオン</router-link></ul>
+      <ul><router-link :to="{name: 'List', params: {version: 'exvs2'}}">EXVS2</router-link></ul>
+    </li>
   </div>
 </template>
 
