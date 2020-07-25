@@ -1,17 +1,23 @@
 <template>
   <div class="container">
-    <b-input v-model="name" placeholder="機体名"></b-input>
-    <b-field>
-      <b-checkbox-button  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-info" selected="selected">
-        <span>{{title}}</span>
-      </b-checkbox-button>
-    </b-field>
-    <b-field>
+    <h2>使用可能機体一覧</h2>
+    <b-input v-model="name" placeholder="機体名で検索"></b-input>
+    <b-field position="is-centered">
       <b-checkbox-button  v-for="cost in costs" :key="cost" v-model="selectedCosts" v-bind:native-value="cost" type="is-success">
         <span>{{cost}}</span>
       </b-checkbox-button>
     </b-field>
-    <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
+    <b-collapse :open="false" aria-id="filter">
+      <button class="button is-primary" slot="trigger" aria-controls="filter">絞り込み</button>
+      <div class="block">
+        <p>タイトル</p>
+      <b-checkbox  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-info">{{title}}</b-checkbox>
+      </div>
+      <div class="block">
+        <p>タグ</p>
+      <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
+      </div>
+    </b-collapse>
     <div id="list" v-for="suit in search" :key="suit.id">
       <article class="panel is-primary">
         <p class="panel-heading">
@@ -109,17 +115,12 @@ export default {
       searched = searched.filter(
         suit => suit.name.includes(this.name)
       )
-      console.log(this.selectedTitles)
-      if (this.selectedTitles.length > 0) {
-        searched = searched.filter(
-          suit => this.selectedTitles.includes(suit.from)
-        )
-      }
-      if (this.selectedCosts.length > 0) {
-        searched = searched.filter(
-          suit => this.selectedCosts.includes(suit.cost)
-        )
-      }
+      searched = searched.filter(
+        suit => this.selectedTitles.includes(suit.from)
+      )
+      searched = searched.filter(
+        suit => this.selectedCosts.includes(suit.cost)
+      )
       if (this.selectedTags.length > 0) {
         searched = searched.filter(
           suit => this.selectedTags.every(tag => suit.tags !== null && suit.tags.includes(tag))
