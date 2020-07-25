@@ -48,7 +48,7 @@
         <template v-if="suit.childIds">
           <a class="panel-block">
             <span class="panel-icon">
-              <i class="fas fa-heart" aria-hidden="true"></i>
+              <i class="fas fa-exchange-alt" aria-hidden="true"></i>
             </span>
             換装先: {{ suit.childIds.join("/") }}
           </a>
