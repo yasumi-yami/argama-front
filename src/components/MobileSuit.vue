@@ -81,15 +81,17 @@ export default {
   },
   mounted() {
     let now = new Date()
-    if (process.env.NODE_ENV == 'production' && localStorage.suits && localStorage.getItem('fetchedAt') > (now.getTime()/1000-3)) {
-      this.suits = JSON.parse(localStorage.getItem('suits'))
+    let key = this.$route.params.version + '/suits'
+    let fetchedAtKey = key + '/fetchedAt'
+    if (localStorage.getItem(key) && localStorage.getItem(fetchedAtKey) > (now.getTime()/1000-3)) {
+      this.suits = JSON.parse(localStorage.getItem(key))
     } else {
       this.axios
         .get(process.env.VUE_APP_API_BASE_URL + '/' + this.$route.params.version + '/suits')
         .then(response => {
           this.suits = response.data.items
-          localStorage.setItem('suits', JSON.stringify(this.suits))
-          localStorage.setItem('fetchedAt',now.getTime()/1000)
+          localStorage.setItem(key, JSON.stringify(this.suits))
+          localStorage.setItem(fetchedAtKey, now.getTime()/1000)
           var tagSet = new Set()
           var costSet = new Set()
           var titleSet = new Set()

@@ -1,5 +1,6 @@
 <template>
   <div class="container overview">
+    <router-link :to="{name: 'List', params: {version: $route.params.version}}">一覧に戻る</router-link>
     <article class="panel is-primary">
       <p class="panel-heading">
       {{ suit.name }}
@@ -103,13 +104,13 @@ export default {
   },
   mounted() {
     let now = new Date()
-    let key = 'suits/' + this.$route.params.id
+    let key = this.$route.params.version + '/suits/' + this.$route.params.id
     let fetchedAtKey = key + '/fetchedAt'
     if (process.env.NODE_ENV == 'production' && localStorage.getItem(key) && localStorage.getItem(fetchedAtKey) > (now.getTime()/1000-3)) {
-      this.suits = JSON.parse(localStorage.getItem('suits'))
+      this.suit = JSON.parse(localStorage.getItem(key))
     } else {
       this.axios
-        .get(process.env.VUE_APP_API_BASE_URL + '/mbon/' + key)
+        .get(process.env.VUE_APP_API_BASE_URL + '/' + key)
         .then(response => {
           this.suit = response.data
           localStorage.setItem(key, JSON.stringify(this.suit))
