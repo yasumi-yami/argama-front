@@ -1,96 +1,104 @@
 <template>
   <div class="container overview">
-    <router-link :to="{name: 'List', params: {version: $route.params.version}}">一覧に戻る</router-link>
-    <article class="panel is-primary">
-      <p class="panel-heading">
-      {{ suit.name }}
+    <router-link :to="{name: 'List', params: {version: $route.params.version}}">一覧</router-link> |
+    <router-link :to="{name: 'Edit', params: {version: $route.params.version, id: $route.params.id}}">編集</router-link>
+    <template v-if="!suit">
+      <p>
+      {{ $route.params.id }} の情報は未登録です。編集画面から登録を行ってください。
       </p>
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-film" aria-hidden="true"></i>
-        </span>
-        登場作品: {{ suit.from }}
-      </a>
-
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-battery-full" aria-hidden="true"></i>
-        </span>
-        コスト: {{ suit.cost }}
-      </a>
-
-      <template v-if="suit.subHP === 0">
+    </template>
+    <template v-else>
+      <article class="panel is-primary">
+        <p class="panel-heading">
+        {{ suit.name }}
+        </p>
         <a class="panel-block">
           <span class="panel-icon">
-            <i class="fas fa-heart" aria-hidden="true"></i>
+            <i class="fas fa-film" aria-hidden="true"></i>
           </span>
-          耐久値: {{ suit.hp }}
+          登場作品: {{ suit.from }}
         </a>
-      </template>
-      <template v-else>
+
         <a class="panel-block">
           <span class="panel-icon">
-            <i class="fas fa-exhange-alt" aria-hidden="true"></i>
+            <i class="fas fa-battery-full" aria-hidden="true"></i>
           </span>
-          耐久値: {{ suit.hp }} + {{ suit.subHP }}
+          コスト: {{ suit.cost }}
         </a>
-      </template>
 
-      <template v-if="suit.parentId || suit.childIds">
-        <template v-if="suit.parentId">
+        <template v-if="suit.subHP === 0">
           <a class="panel-block">
             <span class="panel-icon">
-              <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+              <i class="fas fa-heart" aria-hidden="true"></i>
             </span>
-            換装元機体: {{ suit.parentId }}
+            耐久値: {{ suit.hp }}
           </a>
-        </template>
-        <template v-if="suit.childIds">
-          <a class="panel-block">
-            <span class="panel-icon">
-              <i class="fas fa-exchange-alt" aria-hidden="true"></i>
-            </span>
-            換装先: {{ suit.childIds.join("/") }}
-          </a>
-        </template>
-      </template>
-      <template v-else>
-        <a class="panel-block">
-          <span class="panel-icon">
-            <i class="fas fa-exchange-alt" aria-hidden="true"></i>
-          </span>
-          換装: -
-        </a>
-      </template>
-
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-tags" aria-hidden="true"></i>
-        </span>
-        <template v-if="suit.tags">
-          タグ: {{ suit.tags.join("/") }}
         </template>
         <template v-else>
+          <a class="panel-block">
+            <span class="panel-icon">
+              <i class="fas fa-exhange-alt" aria-hidden="true"></i>
+            </span>
+            耐久値: {{ suit.hp }} + {{ suit.subHP }}
+          </a>
         </template>
-      </a>
-    </article>
-    <section>
-    <h2>機体概要</h2>
-    <p>{{ summary }}</p>
-    </section>
-    <section>
-    <h2>基本戦術</h2>
-    <p>{{ tactics }}</p>
-    </section>
-    <section>
-    <h2>武装解説</h2>
-    </section>
-    <section>
-    <h2>コンボ表</h2>
-    </section>
-    <section>
-    <h2>僚機考察</h2>
-    </section>
+
+        <template v-if="suit.parentId || suit.childIds">
+          <template v-if="suit.parentId">
+            <a class="panel-block">
+              <span class="panel-icon">
+                <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+              </span>
+              換装元機体: {{ suit.parentId }}
+            </a>
+          </template>
+          <template v-if="suit.childIds">
+            <a class="panel-block">
+              <span class="panel-icon">
+                <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+              </span>
+              換装先: {{ suit.childIds.join("/") }}
+            </a>
+          </template>
+        </template>
+        <template v-else>
+          <a class="panel-block">
+            <span class="panel-icon">
+              <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+            </span>
+            換装: -
+          </a>
+        </template>
+
+        <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-tags" aria-hidden="true"></i>
+          </span>
+          <template v-if="suit.tags">
+            タグ: {{ suit.tags.join("/") }}
+          </template>
+          <template v-else>
+          </template>
+        </a>
+      </article>
+      <section>
+        <h2>機体概要</h2>
+        <p>{{ summary }}</p>
+      </section>
+      <section>
+        <h2>基本戦術</h2>
+        <p>{{ tactics }}</p>
+      </section>
+      <section>
+        <h2>武装解説</h2>
+      </section>
+      <section>
+        <h2>コンボ表</h2>
+      </section>
+      <section>
+        <h2>僚機考察</h2>
+      </section>
+    </template>
   </div>
 </template>
 

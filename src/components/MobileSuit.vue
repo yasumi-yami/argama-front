@@ -11,11 +11,11 @@
       <button class="button is-primary" slot="trigger" aria-controls="filter">絞り込み</button>
       <div class="block">
         <p>タイトル</p>
-      <b-checkbox  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-info">{{title}}</b-checkbox>
+        <b-checkbox  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-info">{{title}}</b-checkbox>
       </div>
       <div class="block">
         <p>タグ</p>
-      <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
+        <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
       </div>
     </b-collapse>
     <div id="list" v-for="suit in search" :key="suit.id">
@@ -58,6 +58,13 @@
         </a>
       </article>
     </div>
+    <br>
+    <div class="container">
+      <b-field>
+        <b-input v-model="newId" placeholder="追加する機体のID"></b-input>
+        <router-link tag="button" :to="{name: 'Edit', params: {version: $route.params.version, id: newId}}">新規登録</router-link> 
+      </b-field>
+    </div>
   </div>
 </template>
 
@@ -66,6 +73,7 @@ export default {
   name: 'MobileSuits',
   data() {
     return {
+      newId: '',
       version: '',
       currentSuit: '',
       currentId: '',

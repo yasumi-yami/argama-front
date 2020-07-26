@@ -19,7 +19,12 @@ const routes = [
 		path: '/:version/detail/:id',
 		name: 'Detail',
 		component: () => import( '../views/Detail.vue')
-	}
+	},
+	{
+		path: '/:version/edit/:id',
+		name: 'Edit',
+		component: () => import( '../views/Edit.vue')
+	},
 ]
 
 const router = new VueRouter({
