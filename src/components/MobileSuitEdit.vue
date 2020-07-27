@@ -7,7 +7,7 @@
     <div class="container">
       <section>
         <h3>機体名</h3>
-        <b-input v-model="suit.name"></b-input>
+        <b-input v-model.trim="suit.name"></b-input>
       </section>
       <section>
         <h3>換装元機体</h3>
@@ -24,19 +24,19 @@
       </section>
       <section>
         <h3>出典作品</h3>
-        <b-input v-model="suit.from"></b-input>
+        <b-input v-model.trim="suit.from"></b-input>
       </section>
       <section>
         <h3>コスト</h3>
-        <b-input v-model="suit.cost"></b-input>
+        <b-input v-model.number="suit.cost"></b-input>
       </section>
       <section>
         <h3>耐久値</h3>
-        <b-input v-model="suit.hp"></b-input>
+        <b-input v-model.number="suit.hp"></b-input>
       </section>
       <section>
         <h3>耐久値(復活/回復)</h3>
-        <b-input v-model="suit.subHP"></b-input>
+        <b-input v-model.number="suit.subHP"></b-input>
       </section>
       <section>
         <h3>タグ</h3>
@@ -78,6 +78,11 @@ export default {
   data() {
     return {
       suit: {
+        name: "",
+        from: "",
+        cost: 0,
+        hp: 0,
+        subHP: 0,
         childIds: [],
         detail: {},
       },
@@ -86,20 +91,12 @@ export default {
     }
   },
   mounted() {
-    let now = new Date()
     let key = this.$route.params.version + '/suits/' + this.$route.params.id
-    let fetchedAtKey = key + '/fetchedAt'
-    if (process.env.NODE_ENV == 'production' && localStorage.getItem(key) && localStorage.getItem(fetchedAtKey) > (now.getTime()/1000-3)) {
-      this.suit = JSON.parse(localStorage.getItem(key))
-    } else {
-      this.axios
-        .get(process.env.VUE_APP_API_BASE_URL + '/' + key)
-        .then(response => {
-          this.suit = response.data
-          localStorage.setItem(key, JSON.stringify(this.suit))
-          localStorage.setItem(fetchedAtKey,now.getTime()/1000)
-        })
-    }
+    this.axios
+      .get(process.env.VUE_APP_API_BASE_URL + '/' + key)
+      .then(response => {
+        this.suit = response.data
+      })
   },
   computed: {
     summary: function() {
