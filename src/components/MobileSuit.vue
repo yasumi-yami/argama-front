@@ -31,24 +31,21 @@
             <i class="fas fa-battery-full" aria-hidden="true"></i>
           </span>
           {{ suit.cost }}
-        </a>
-
-        <template v-if="suit.subHP === 0">
-          <a class="panel-block">
-            <span class="panel-icon">
+          <template v-if="suit.subHP === 0">
+            <span class="panel-icon" style="margin: 0 5px 0 10px">
               <i class="fas fa-heart" aria-hidden="true"></i>
             </span>
             {{ suit.hp }}
-          </a>
-        </template>
-        <template v-else>
-          <a class="panel-block">
-            <span class="panel-icon">
+          </template>
+          <template v-else>
+            <span class="panel-icon" style="margin: 0 5px 0 10px">
               <i class="fas fa-heart" aria-hidden="true"></i>
             </span>
             {{ suit.hp }} + {{ suit.subHP }}
-          </a>
-        </template>
+          </template>
+
+        </a>
+
         <a class="panel-block">
           <span class="panel-icon">
             <i class="fas fa-tags" aria-hidden="true"></i>

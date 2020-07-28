@@ -17,8 +17,11 @@
             <i class="fas fa-film" aria-hidden="true"></i>
           </span>
           登場作品: {{ suit.from }}
+          <span class="panel-icon" style="margin: 0 5px 0 10px ">
+            <i class="fas fa-user" aria-hidden="true"></i>
+          </span>
+           搭乗者: {{ suit.pilot }}
         </a>
-
         <a class="panel-block">
           <span class="panel-icon">
             <i class="fas fa-battery-full" aria-hidden="true"></i>
@@ -181,7 +184,6 @@
             </strong>
           </div>
           <div class="panel-block">
-            {{ partners }}
           </div>
         </b-collapse>
       </section>
