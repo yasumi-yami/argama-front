@@ -132,6 +132,9 @@ export default {
 
   },
   methods: {
+    savedDialog() {
+      this.$buefy.dialog.alert("更新しました")
+    },
     addChild() {
       if (this.suit.childIds === null) {
         this.suit.childIds = []
@@ -152,7 +155,10 @@ export default {
     save() {
       this.axios
         .put(process.env.VUE_APP_API_BASE_URL + '/' + this.$route.params.version + '/suits/' + this.$route.params.id, this.suit)
-        .then(response => { this.suit = response.data })
+        .then(response => { 
+          this.suit = response.data
+          this.savedDialog()
+        })
         .catch(error => {
           alert("更新失敗")
           console.log(error)

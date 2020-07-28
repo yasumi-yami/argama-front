@@ -42,7 +42,7 @@
         <template v-else>
           <a class="panel-block">
             <span class="panel-icon">
-              <i class="fas fa-exhange-alt" aria-hidden="true"></i>
+              <i class="fas fa-heart" aria-hidden="true"></i>
             </span>
             耐久値: {{ suit.hp }} + {{ suit.subHP }}
           </a>

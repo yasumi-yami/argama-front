@@ -17,7 +17,7 @@
         <b-checkbox  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-info">{{title}}</b-checkbox>
       </div>
       <div class="block">
-        <h4>タグ</h4>
+        <h4>タグ(and条件)</h4>
         <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
       </div>
     </b-collapse>
