@@ -2,19 +2,22 @@
   <div class="container">
     <h2>使用可能機体一覧</h2>
     <b-input v-model="name" placeholder="機体名で検索"></b-input>
-    <b-field position="is-centered">
-      <b-checkbox-button  v-for="cost in costs" :key="cost" v-model="selectedCosts" v-bind:native-value="cost" type="is-success">
-        <span>{{cost}}</span>
-      </b-checkbox-button>
-    </b-field>
     <b-collapse :open="false" aria-id="filter">
-      <button class="button is-primary" slot="trigger" aria-controls="filter">絞り込み</button>
+      <button class="button is-info" slot="trigger" aria-controls="filter">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        検索条件を表示
+      </button>
       <div class="block">
-        <p>タイトル</p>
+        <h4>コスト</h4>
+        <b-checkbox  v-for="cost in costs" :key="cost" v-model="selectedCosts" v-bind:native-value="cost" type="is-info">{{cost}}</b-checkbox>
+      </div>
+
+      <div class="block">
+        <h4>タイトル</h4>
         <b-checkbox  v-for="title in titles" :key="title" v-model="selectedTitles" v-bind:native-value="title" type="is-info">{{title}}</b-checkbox>
       </div>
       <div class="block">
-        <p>タグ</p>
+        <h4>タグ</h4>
         <b-checkbox v-for="tag in tags" :key="tag" size="small" v-bind:native-value="tag" v-model="selectedTags">{{tag}}</b-checkbox>
       </div>
     </b-collapse>

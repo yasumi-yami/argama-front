@@ -82,24 +82,111 @@
         </a>
       </article>
       <section>
-        <h2>機体概要</h2>
-        <p>{{ summary }}</p>
+        <b-collapse
+          aria-id="summary"
+          class="panel"
+          animation="slide"
+          :open.sync="summaryOpen">
+          <div
+            slot="trigger"
+            class="panel-heading"
+            role="button"
+            aria-controls="summary">
+            <strong>
+              <i class="fas fa-robot"></i> 機体概要
+            </strong>
+          </div>
+          <div class="panel-block">
+            {{ summary }}
+          </div>
+        </b-collapse>
       </section>
+      <br>
       <section>
-        <h2>基本戦術</h2>
-        <p>{{ tactics }}</p>
+        <b-collapse
+          aria-id="tactics"
+          class="panel"
+          animation="slide"
+          :open.sync="tacticsOpen">
+          <div
+            slot="trigger"
+            class="panel-heading"
+            role="button"
+            aria-controls="tactics">
+            <strong>
+              <i class="fas fa-file-alt"></i> 基本戦術・立ち回り
+            </strong>
+          </div>
+          <div class="panel-block">
+            {{ tactics }}
+          </div>
+        </b-collapse>
       </section>
+      <br>
       <section>
-        <h2>武装解説</h2>
+        <b-collapse
+          aria-id="arms"
+          class="panel"
+          animation="slide"
+          :open.sync="armsOpen">
+          <div
+            slot="trigger"
+            class="panel-heading"
+            role="button"
+            aria-controls="arms">
+            <strong>
+              <i class="fas fa-bomb"></i> 武装解説
+            </strong>
+          </div>
+          <div class="panel-block">
+            {{ arms }}
+          </div>
+        </b-collapse>
       </section>
+      <br>
       <section>
-        <h2>コンボ表</h2>
+        <b-collapse
+          aria-id="combos"
+          class="panel"
+          animation="slide"
+          :open.sync="combosOpen">
+          <div
+            slot="trigger"
+            class="panel-heading"
+            role="button"
+            aria-controls="combos">
+            <strong>
+              <i class="fas fa-fast-forward"></i> コンボ表
+            </strong>
+          </div>
+          <div class="panel-block">
+            {{ combos }}
+          </div>
+        </b-collapse>
       </section>
+      <br>
       <section>
-        <h2>僚機考察</h2>
+        <b-collapse
+          aria-id="partners"
+          class="panel"
+          animation="slide"
+          :open.sync="partnersOpen">
+          <div
+            slot="trigger"
+            class="panel-heading"
+            role="button"
+            aria-controls="partners">
+            <strong>
+              <i class="fas fa-bomb"></i> 僚機考察
+            </strong>
+          </div>
+          <div class="panel-block">
+            {{ partners }}
+          </div>
+        </b-collapse>
       </section>
     </template>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -108,6 +195,11 @@ export default {
   data() {
     return {
       suit: {},
+      summaryOpen: false,
+      tacticsOpen: false,
+      armsOpen: false,
+      combosOpen: false,
+      partnersOpen: false,
     }
   },
   mounted() {
