@@ -1,4 +1,7 @@
 module.exports = {
   publicPath: '/argama-front/',
-  outputDir: 'docs'
+  outputDir: 'docs',
+  devServer: {
+    host: "localhost"
+  }
 }

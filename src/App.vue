@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
+      <router-link to="/">トップ</router-link> |
+      <router-link to="/signin">ログイン</router-link> |
     </div>
     <router-view/>
   </div>

@@ -25,6 +25,11 @@ const routes = [
 		name: 'Edit',
 		component: () => import( '../views/Edit.vue')
 	},
+	{
+		path: '/signin',
+		name: 'Signin',
+		component: () => import( '@/components/Signin' )
+	}
 ]
 
 const router = new VueRouter({

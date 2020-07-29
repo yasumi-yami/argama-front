@@ -182,7 +182,7 @@
             role="button"
             aria-controls="partners">
             <strong>
-              <i class="fas fa-bomb"></i> 僚機考察
+              <i class="fas fa-user-friends"></i> 僚機考察
             </strong>
           </div>
           <div class="panel-block">

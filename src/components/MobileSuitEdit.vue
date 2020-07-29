@@ -153,16 +153,18 @@ export default {
       this.newTag = null
     },
     save() {
-      this.axios
-        .put(process.env.VUE_APP_API_BASE_URL + '/' + this.$route.params.version + '/suits/' + this.$route.params.id, this.suit)
-        .then(response => { 
-          this.suit = response.data
-          this.savedDialog()
-        })
-        .catch(error => {
-          alert("更新失敗")
-          console.log(error)
-        })
+        this.axios
+          .put(process.env.VUE_APP_API_BASE_URL + '/' + this.$route.params.version + '/suits/' + this.$route.params.id, 
+            this.suit, 
+  { headers: {Authorization: `Bearer ${localStorage.getItem('idToken')}`} })
+          .then(response => { 
+            this.suit = response.data
+            this.savedDialog()
+          })
+          .catch(error => {
+            alert("更新失敗")
+            console.log(error)
+          })
     },
   }
 }
